@@ -1,0 +1,39 @@
+name: Sincronizador Diario Macro USD/MXN
+
+on:
+  schedule:
+    # Se ejecuta automáticamente todos los días a las 12:00 UTC (06:00 AM hora de CDMX / CST)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Permite ejecutarlo manualmente en cualquier momento desde GitHub
+
+permissions:
+  contents: write
+
+jobs:
+  update-radar-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Entorno Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Ejecutar Ingesta RSS y Scoring Cuantamental
+        run: |
+          python scripts/daily_updater.py
+
+      - name: Confirmar y Publicar Cambios
+        run: |
+          git config user.name "IN2TECHMX Bot"
+          git config user.email "bot@in2tech.mx"
+          git add data.js
+          if git diff --staged --quiet; then
+            echo "Sin cambios en el feed de hoy. Todo al día."
+          else
+            git commit -m "chore(sync): actualización automática diaria de noticias e impacto cuantamental [skip ci]"
+            git push
+          fi
