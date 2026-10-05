@@ -718,8 +718,9 @@ const MAJOR_SHOCKS = {
 };
 
 const MODEL_KPIS = {
-  spotPrice: 18.1450,
-  spotDate: '2026-10-02',
+  spotPrice: 18.1903,
+  spotDate: '2026-10-05 (HOY - Banxico FIX)',
+  fridayClose: 18.1450,
   regimeProbDaily: 5.23,
   regimeStatus: 'ESTABLE',
   netNewsBias: '+0.58% ALCISTA DÓLAR',
