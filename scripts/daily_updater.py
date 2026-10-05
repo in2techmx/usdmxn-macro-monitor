@@ -1,64 +1,84 @@
-﻿"""Daily Automated Synchronizer for USD/MXN Macro Monitor
+﻿"""Daily Automated Multi-Channel Synchronizer for USD/MXN Macro Monitor
 
-Runs inside GitHub Actions daily at 19:00 UTC (13:00 CST México).
-Fetches latest market news and updates data.js.
+Ingests 4 Global Intelligence Channels:
+1. Geopolítica & Petróleo (Medio Oriente, Ormuz, Ucrania, Crudo)
+2. EE.UU. & Fed (Política monetaria, Tasas, Aranceles globales)
+3. Multipolaridad & BRICS (Riesgo global, Mercados emergentes)
+4. México & Banxico (Política interna, T-MEC, Reformas)
 """
 
 import json
 import os
 import re
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-FEED_URL = "https://news.google.com/rss/search?q=peso+mexicano+dolar+banxico+when:2d&hl=es-419&gl=MX&ceid=MX:es-419"
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
 
-def fetch_latest_news():
+CHANNELS = [
+    {
+        "channel": "geopolitica_energia",
+        "tag_ui": "🌍 Geopolítica & Petróleo",
+        "query": 'guerra OR "medio oriente" OR ormuz OR israel OR ucrania OR petroleo OR wti when:3d'
+    },
+    {
+        "channel": "eeuu_fed",
+        "tag_ui": "🇺🇸 EE.UU. & Fed",
+        "query": '"reserva federal" OR powell OR "guerra comercial" OR "tasas de interes" OR aranceles when:3d'
+    },
+    {
+        "channel": "global_brics",
+        "tag_ui": "🌐 Global & BRICS",
+        "query": 'brics OR "aversion al riesgo" OR "mercados emergentes" OR "desdolarizacion" when:3d'
+    },
+    {
+        "channel": "mexico_banxico",
+        "tag_ui": "🇲🇽 México & Banxico",
+        "query": 'peso mexicano OR "banco de mexico" OR banxico OR "t-mec" OR "reforma" when:3d'
+    }
+]
+
+def fetch_channel_news(channel_info):
     articles = []
+    query = channel_info["query"]
+    url = f"https://news.google.com/rss/search?q={urllib.parse.quote(query)}&hl=es-419&gl=MX&ceid=MX:es-419"
     try:
-        req = urllib.request.Request(FEED_URL, headers={"User-Agent": USER_AGENT})
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
         with urllib.request.urlopen(req, timeout=12) as resp:
             content = resp.read()
         root = ET.fromstring(content)
-        for item in root.findall(".//item")[:15]:
+        for item in root.findall(".//item")[:6]:
             title = item.findtext("title", "")
-            url = item.findtext("link", "")
-            source = item.findtext("source", "Medio Financiero")
-            pub_date = item.findtext("pubDate", "")
+            link = item.findtext("link", "")
+            source = item.findtext("source", "Medio Internacional")
             
-            # Limpiar título
             parts = title.rsplit(" - ", 1)
             clean_title = parts[0] if parts else title
             if len(parts) > 1:
                 source = parts[1]
 
             direction = "NEUTRAL"
-            title_lower = clean_title.lower()
-            if any(k in title_lower for k in ["cae", "baja el peso", "sube el dolar", "deprecia", "aranceles", "riesgo"]):
+            tl = clean_title.lower()
+            if any(k in tl for k in ["guerra", "ataque", "escala", "sancion", "alza de tasa", "arancel", "cae el peso", "sube el dolar", "debilita", "presion"]):
                 direction = "ALCISTA_DOLAR"
-            elif any(k in title_lower for k in ["sube el peso", "baja el dolar", "aprecia", "superpeso", "ganancias"]):
+            elif any(k in tl for k in ["recorte de tasa", "tregua", "aprecia", "superpeso", "fortalece", "gana", "acuerdo comercial"]):
                 direction = "BAJISTA_DOLAR"
 
-            archetype = "macro"
-            if "banxico" in title_lower or "tasa" in title_lower:
-                archetype = "decision_banxico"
-            elif "arancel" in title_lower or "t-mec" in title_lower:
-                archetype = "aranceles_comercio"
-            elif "inflacion" in title_lower:
-                archetype = "inflacion_datos"
-
             articles.append({
-                "id": f"NEWS-{abs(hash(url)) % 100000000:08x}",
+                "id": f"NEWS-{abs(hash(link)) % 100000000:08x}",
                 "title": clean_title,
                 "source": source,
-                "url": url,
+                "url": link,
                 "date": datetime.utcnow().strftime("%Y-%m-%d"),
-                "archetype": archetype,
+                "channel": channel_info["channel"],
+                "channel_ui": channel_info["tag_ui"],
+                "archetype": channel_info["channel"],
                 "direction": direction
             })
     except Exception as e:
-        print(f"Error fetching RSS: {e}")
+        print(f"Error fetching channel {channel_info['channel']}: {e}")
     return articles
 
 def main():
@@ -66,26 +86,29 @@ def main():
     data_js_path = os.path.join(root_dir, "data.js")
     
     if not os.path.exists(data_js_path):
-        print("data.js not found.")
+        print("data.js no encontrado.")
         return
 
-    fresh_news = fetch_latest_news()
-    if fresh_news:
-        print(f"Fetched {len(fresh_news)} live articles.")
+    all_articles = []
+    for ch in CHANNELS:
+        arts = fetch_channel_news(ch)
+        print(f"Canal '{ch['channel']}': {len(arts)} artículos recuperados.")
+        all_articles.extend(arts)
+
+    if all_articles:
         with open(data_js_path, "r", encoding="utf-8") as f:
             js_content = f.read()
 
-        # Reemplazar RECENT_NEWS en data.js
-        news_json = json.dumps(fresh_news, indent=2, ensure_ascii=False)
+        news_json = json.dumps(all_articles, indent=2, ensure_ascii=False)
         pattern = r"const RECENT_NEWS = \[.*?\];"
         replacement = f"const RECENT_NEWS = {news_json};"
         new_content = re.sub(pattern, replacement, js_content, flags=re.S)
 
         with open(data_js_path, "w", encoding="utf-8") as f:
             f.write(new_content)
-        print("data.js updated with fresh news.")
+        print(f"data.js actualizado con {len(all_articles)} noticias globales.")
     else:
-        print("No fresh news fetched, keeping existing dataset.")
+        print("No se pudieron descargar noticias frescas.")
 
 if __name__ == "__main__":
     main()

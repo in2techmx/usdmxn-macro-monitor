@@ -411,8 +411,17 @@
       </div>
 
       <div class="tabs-bar">
-        <button class="tab-item active" id="tabDaily" onclick="setTab('daily')">Noticias Recientes (Diario / Semanal)</button>
-        <button class="tab-item" id="tabShocks" onclick="setTab('shocks')">Grandes Choques MacKinlay (Ranking Dual)</button>
+        <button class="tab-item active" id="tabDaily" onclick="setTab('daily')">Radar de Inteligencia Global (4 Canales)</button>
+        <button class="tab-item" id="tabShocks" onclick="setTab('shocks')">Grandes Choques MacKinlay (Ranking Dual Histórico)</button>
+      </div>
+
+      <!-- Barra de Filtros de Canales Internacionales -->
+      <div id="channelFilters" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.25rem;">
+        <button class="role-btn active" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;" onclick="filterChannel('all', this)">🌐 Todos los Frentes</button>
+        <button class="role-btn" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;" onclick="filterChannel('geopolitica_energia', this)">🌍 Medio Oriente, Hormuz & Petróleo</button>
+        <button class="role-btn" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;" onclick="filterChannel('eeuu_fed', this)">🇺🇸 EE.UU., Fed & Tasas</button>
+        <button class="role-btn" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;" onclick="filterChannel('mexico_banxico', this)">🇲🇽 México, Banxico & T-MEC</button>
+        <button class="role-btn" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;" onclick="filterChannel('global_brics', this)">🌐 BRICS & Desdolarización</button>
       </div>
 
       <!-- Feed Container -->
@@ -622,12 +631,29 @@
       renderNews();
     }
 
+    let currentChannelFilter = 'all';
+
+    function filterChannel(channel, btn) {
+      currentChannelFilter = channel;
+      document.querySelectorAll('#channelFilters button').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderNews();
+    }
+
     function renderNews() {
       const grid = document.getElementById('newsGrid');
+      const filterBar = document.getElementById('channelFilters');
       grid.innerHTML = '';
 
       if (currentTab === 'daily') {
-        RECENT_NEWS.forEach(item => {
+        if (filterBar) filterBar.style.display = 'flex';
+        grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(320px, 1fr))';
+        
+        const filtered = currentChannelFilter === 'all' 
+          ? RECENT_NEWS 
+          : RECENT_NEWS.filter(n => n.channel === currentChannelFilter);
+
+        filtered.forEach(item => {
           const isBull = item.direction === 'ALCISTA_DOLAR';
           const card = document.createElement('div');
           card.className = 'news-card';
@@ -640,7 +666,7 @@
               <div class="news-title">${item.title}</div>
               <div class="news-tags">
                 <span class="tag ${isBull ? 'tag-bull' : 'tag-bear'}">${item.direction || 'NEUTRAL'}</span>
-                <span class="tag">${item.archetype || 'macro'}</span>
+                <span class="tag" style="color: var(--accent-cyan);">${item.channel_ui || item.channel || 'Macro'}</span>
               </div>
             </div>
             <a href="${item.url}" target="_blank" class="news-link">Ver artículo original ↗</a>
@@ -648,6 +674,7 @@
           grid.appendChild(card);
         });
       } else {
+        if (filterBar) filterBar.style.display = 'none';
         // Mostrar tablas duales de grandes choques
         grid.style.gridTemplateColumns = '1fr';
         grid.innerHTML = `
