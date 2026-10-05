@@ -1,0 +1,673 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USD/MXN Macro & News Monitor | IN2TECHMX</title>
+  <meta name="description" content="Monitor institucional de tipo de cambio USD/MXN con feed de noticias reales, estudio de eventos MacKinlay y cono probabilístico Merton Jump-Diffusion a 30 días.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg-main: #090d16;
+      --bg-card: rgba(16, 24, 40, 0.75);
+      --bg-card-hover: rgba(22, 34, 56, 0.9);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(56, 189, 248, 0.3);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-amber: #f59e0b;
+      --accent-indigo: #6366f1;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.08) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Top Navigation */
+    header {
+      border-bottom: 1px solid var(--border-card);
+      backdrop-filter: blur(16px);
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(9, 13, 22, 0.85);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 4.25rem;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
+      width: 2.25rem; height: 2.25rem; border-radius: 0.5rem;
+      display: grid; place-items: center; font-weight: 800; font-size: 0.85rem; color: #000;
+    }
+    .brand-text h1 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; }
+    .brand-text span { font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+    .nav-stats { display: flex; gap: 1.25rem; align-items: center; }
+    .stat-pill {
+      display: flex; flex-direction: column; align-items: flex-end;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+    }
+    .stat-pill-label { color: var(--text-muted); font-size: 0.65rem; text-transform: uppercase; }
+    .stat-pill-val { font-weight: 700; }
+    .val-emerald { color: var(--accent-emerald); }
+    .val-cyan { color: var(--accent-cyan); }
+    .val-amber { color: var(--accent-amber); }
+
+    /* Hero Metrics Grid */
+    .hero { padding: 2rem 0 1.5rem; }
+    .metrics-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .metric-card {
+      background: var(--bg-card); border: 1px solid var(--border-card);
+      border-radius: 1rem; padding: 1.25rem; backdrop-filter: blur(8px);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .metric-card:hover { transform: translateY(-2px); border-color: var(--border-accent); }
+    .metric-title { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 0.5rem; }
+    .metric-value { font-size: 1.85rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; letter-spacing: -0.03em; }
+    .metric-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.35rem; }
+
+    /* Section Headers */
+    .section-title {
+      font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+
+    /* Main Chart Section */
+    .chart-panel {
+      background: var(--bg-card); border: 1px solid var(--border-card);
+      border-radius: 1.25rem; padding: 1.5rem; margin-bottom: 2rem;
+    }
+    .chart-container { position: relative; height: 380px; width: 100%; margin-bottom: 1.5rem; }
+
+    /* Interactive Slider Control */
+    .slider-box {
+      background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-card);
+      border-radius: 1rem; padding: 1.25rem; margin-top: 1rem;
+    }
+    .slider-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;
+    }
+    .slider-header span { font-size: 0.85rem; font-weight: 600; color: var(--accent-cyan); }
+    input[type=range] {
+      width: 100%; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1);
+      outline: none; -webkit-appearance: none; cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: var(--accent-cyan); cursor: pointer; box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+    }
+
+    .slider-details-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.75rem; margin-top: 1rem;
+    }
+    .slider-detail-item {
+      background: rgba(255,255,255,0.03); border-radius: 0.5rem; padding: 0.6rem 0.75rem;
+    }
+    .slider-detail-item small { display: block; font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; }
+    .slider-detail-item strong { font-size: 1rem; font-family: 'JetBrains Mono', monospace; }
+
+    /* Decision Assistant */
+    .decision-panel {
+      background: var(--bg-card); border: 1px solid var(--border-card);
+      border-radius: 1.25rem; padding: 1.75rem; margin-bottom: 2rem;
+    }
+    .role-toggle {
+      display: inline-flex; background: rgba(0,0,0,0.3); padding: 0.25rem;
+      border-radius: 0.75rem; border: 1px solid var(--border-card); margin-bottom: 1.5rem;
+    }
+    .role-btn {
+      padding: 0.5rem 1.25rem; border-radius: 0.5rem; border: none; font-size: 0.85rem;
+      font-weight: 600; cursor: pointer; background: transparent; color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .role-btn.active {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
+      color: #000; font-weight: 700;
+    }
+
+    .decision-content-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+    @media (max-width: 768px) { .decision-content-grid { grid-template-columns: 1fr; } }
+
+    .rec-box {
+      border-radius: 1rem; padding: 1.25rem; border: 1px solid var(--border-card);
+      background: rgba(255,255,255,0.02);
+    }
+    .rec-badge {
+      display: inline-block; padding: 0.25rem 0.75rem; border-radius: 2rem;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem;
+    }
+    .badge-buy { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid var(--accent-emerald); }
+    .badge-sell { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); border: 1px solid var(--accent-rose); }
+    .rec-text { font-size: 0.95rem; line-height: 1.6; color: #e2e8f0; }
+
+    .calc-input-group { margin-bottom: 1rem; }
+    .calc-input-group label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.35rem; }
+    .calc-input {
+      width: 100%; padding: 0.65rem 0.85rem; border-radius: 0.5rem;
+      background: rgba(0,0,0,0.4); border: 1px solid var(--border-card);
+      color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 1rem;
+    }
+
+    /* News Feed Tabs */
+    .news-section { margin-bottom: 2.5rem; }
+    .tabs-bar {
+      display: flex; gap: 0.75rem; border-bottom: 1px solid var(--border-card);
+      margin-bottom: 1.5rem;
+    }
+    .tab-item {
+      padding: 0.75rem 1rem; border: none; background: transparent; color: var(--text-muted);
+      font-size: 0.9rem; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent;
+    }
+    .tab-item.active { color: var(--accent-cyan); border-color: var(--accent-cyan); }
+
+    .news-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+    .news-card {
+      background: var(--bg-card); border: 1px solid var(--border-card);
+      border-radius: 1rem; padding: 1.25rem; display: flex; flex-direction: column;
+      justify-content: space-between; transition: all 0.2s;
+    }
+    .news-card:hover { transform: translateY(-2px); border-color: var(--border-accent); }
+    .news-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;
+    }
+    .news-source { font-weight: 600; color: var(--accent-cyan); }
+    .news-title {
+      font-size: 0.95rem; font-weight: 600; line-height: 1.4; margin-bottom: 0.75rem;
+      color: #f8fafc;
+    }
+    .news-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .tag {
+      font-size: 0.65rem; padding: 0.2rem 0.5rem; border-radius: 0.35rem;
+      background: rgba(255,255,255,0.06); color: var(--text-muted); font-family: 'JetBrains Mono', monospace;
+    }
+    .tag-bull { color: var(--accent-rose); background: rgba(244, 63, 94, 0.1); }
+    .tag-bear { color: var(--accent-emerald); background: rgba(16, 185, 129, 0.1); }
+
+    .news-link {
+      color: var(--accent-cyan); font-size: 0.8rem; text-decoration: none; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 0.3rem; align-self: flex-start;
+    }
+    .news-link:hover { text-decoration: underline; }
+
+    /* Dual Ranking Tables */
+    .tables-dual-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;
+    }
+    @media (max-width: 900px) { .tables-dual-grid { grid-template-columns: 1fr; } }
+    .table-box {
+      background: var(--bg-card); border: 1px solid var(--border-card);
+      border-radius: 1rem; padding: 1.25rem; overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left; }
+    th { padding: 0.6rem 0.5rem; border-bottom: 1px solid var(--border-card); color: var(--text-muted); font-weight: 600; }
+    td { padding: 0.6rem 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.04); font-family: 'JetBrains Mono', monospace; }
+    .row-bull td:first-child { color: var(--accent-rose); font-weight: 700; }
+    .row-bear td:first-child { color: var(--accent-emerald); font-weight: 700; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-card); padding: 2.5rem 0;
+      color: var(--text-muted); font-size: 0.8rem; margin-top: 3rem; text-align: center;
+    }
+    footer a { color: var(--accent-cyan); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <div class="brand-badge">FX</div>
+        <div class="brand-text">
+          <h1>USD/MXN MACRO & NEWS MONITOR</h1>
+          <span>IN2TECHMX GOVERNANCE • ADR-006 SWARM</span>
+        </div>
+      </a>
+      <div class="nav-stats">
+        <div class="stat-pill">
+          <span class="stat-pill-label">Spot 2-Oct-2026</span>
+          <span class="stat-pill-val val-cyan">$18.1450</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Régimen</span>
+          <span class="stat-pill-val val-emerald">ESTABLE (5.23%)</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-label">Sesgo Noticias</span>
+          <span class="stat-pill-val val-amber">+0.58% ALCISTA</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero KPI Cards -->
+    <section class="hero">
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-title">Precio Spot de Referencia</div>
+          <div class="metric-value val-cyan">$18.1450</div>
+          <div class="metric-sub">Media Móvil 30D: $17.3100</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Mediana Esperada (t+30 días)</div>
+          <div class="metric-value val-emerald">$18.1733</div>
+          <div class="metric-sub">Variación esperada: +0.16% (+2.8¢)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Canal P25 - P75 (50% prob)</div>
+          <div class="metric-value">$17.57 - $18.75</div>
+          <div class="metric-sub">Rango de confort y equilibrio</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Riesgo de Ruptura > $20.00</div>
+          <div class="metric-value val-emerald">2.82%</div>
+          <div class="metric-sub">Prob. de volver a < $18: 42.48%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cono Probabilístico Interactivo -->
+    <section class="chart-panel">
+      <div class="section-title">
+        <span>📈 Cono de Trayectoria Probabilística a 30 Días (Merton Jump-Diffusion)</span>
+      </div>
+      <div class="section-desc">
+        5,000 trayectorias vectoriales calibradas con los 99 choques históricos reales y saltos de Poisson. Mueve el control deslizante para inspeccionar cualquier día del mes.
+      </div>
+
+      <div class="chart-container">
+        <canvas id="trajectoryChart"></canvas>
+      </div>
+
+      <!-- Slider Interactivo -->
+      <div class="slider-box">
+        <div class="slider-header">
+          <span id="sliderDayLabel">Día Seleccionado: Día 03 (2026-10-05 — HOY)</span>
+          <span id="sliderCatalystLabel" style="color: var(--text-muted); font-size: 0.8rem;">Catalizador: Apertura semanal bancaria; cautela por DXY y crudo WTI.</span>
+        </div>
+        <input type="range" id="daySlider" min="0" max="30" value="3" step="1">
+        
+        <div class="slider-details-grid">
+          <div class="slider-detail-item">
+            <small>Soporte P10 (Baja Extrema)</small>
+            <strong id="cardP10" class="val-emerald">$17.8260</strong>
+          </div>
+          <div class="slider-detail-item">
+            <small>Cuartil P25</small>
+            <strong id="cardP25">$17.9835</strong>
+          </div>
+          <div class="slider-detail-item">
+            <small>Mediana P50 (Centro)</small>
+            <strong id="cardP50" class="val-cyan">$18.1461</strong>
+          </div>
+          <div class="slider-detail-item">
+            <small>Cuartil P75</small>
+            <strong id="cardP75">$18.3107</strong>
+          </div>
+          <div class="slider-detail-item">
+            <small>Resistencia P90 (Alza Extrema)</small>
+            <strong id="cardP90" class="val-rose" style="color: var(--accent-rose);">$18.4789</strong>
+          </div>
+          <div class="slider-detail-item">
+            <small>Dispersión Sigma</small>
+            <strong id="cardStd">±$0.2833</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Módulo de Toma de Decisiones y Cobertura -->
+    <section class="decision-panel">
+      <div class="section-title">
+        <span>🎯 Asistente Táctico de Decisión y Coberturas Cambiarias</span>
+      </div>
+      <div class="section-desc">
+        Estrategia personalizada según el perfil comercial y balance de riesgos probabilísticos.
+      </div>
+
+      <div class="role-toggle">
+        <button class="role-btn active" id="btnImportador" onclick="setRole('importador')">Soy Importador (Compro USD)</button>
+        <button class="role-btn" id="btnExportador" onclick="setRole('exportador')">Soy Exportador (Vendo USD)</button>
+      </div>
+
+      <div class="decision-content-grid">
+        <!-- Recomendación Táctica -->
+        <div class="rec-box" id="recBox">
+          <div class="rec-badge badge-buy" id="recBadge">RECOMENDACIÓN TÁCTICA: ESPERAR O COMPRA ESCALONADA</div>
+          <p class="rec-text" id="recText">
+            Existe un <strong>42.48% de probabilidad</strong> de que el tipo de cambio regrese por debajo de los $18.00 MXN en las próximas dos semanas. La probabilidad de que el dólar rompa los $20.00 es de solo <strong>2.82%</strong>. No pague primas caras de pánico por encima de $18.50; concentre compras spot o fije coberturas parciales en el soporte de <strong>$17.60 - $17.90</strong>.
+          </p>
+        </div>
+
+        <!-- Calculadora de Escenarios -->
+        <div class="rec-box">
+          <div class="calc-input-group">
+            <label>Monto a Operar en USD:</label>
+            <input type="number" id="calcAmount" class="calc-input" value="100000" step="5000" oninput="updateCalculator()">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem;">
+            <div class="slider-detail-item">
+              <small>Costo Spot Hoy ($18.1450)</small>
+              <strong id="costSpot">$1,814,500 MXN</strong>
+            </div>
+            <div class="slider-detail-item">
+              <small>Costo Esperado P50 ($18.1733)</small>
+              <strong id="costP50">$1,817,330 MXN</strong>
+            </div>
+            <div class="slider-detail-item">
+              <small>Mejor Escenario P10</small>
+              <strong id="costP10" class="val-emerald">$1,708,720 MXN</strong>
+            </div>
+            <div class="slider-detail-item">
+              <small>Peor Escenario P90</small>
+              <strong id="costP90" class="val-rose" style="color: var(--accent-rose);">$1,935,640 MXN</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feed de Noticias Reales -->
+    <section class="news-section">
+      <div class="section-title">
+        <span>📰 Feed de Noticias Reales & Event Study</span>
+      </div>
+      <div class="section-desc">
+        Corpus de 2,407 artículos de 249 medios independientes clasificados causalmente bajo el protocolo IN2TECHMX.
+      </div>
+
+      <div class="tabs-bar">
+        <button class="tab-item active" id="tabDaily" onclick="setTab('daily')">Noticias Recientes (Diario / Semanal)</button>
+        <button class="tab-item" id="tabShocks" onclick="setTab('shocks')">Grandes Choques MacKinlay (Ranking Dual)</button>
+      </div>
+
+      <!-- Feed Container -->
+      <div id="newsGrid" class="news-grid"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><strong>IN2TECHMX Macro Predictor USD/MXN</strong> — Arquitectura Swarm Segmentada (ADR-006).</p>
+      <p style="margin-top: 0.5rem;">Event Study (MacKinlay 1997) • Difusión con Saltos (Merton 1976) • Trazabilidad y Cero Cajas Negras.</p>
+    </div>
+  </footer>
+
+  <!-- Cargar Dataset -->
+  <script src="data.js"></script>
+  <script>
+    // 1. Inicialización de Gráfica Chart.js
+    let chartInstance = null;
+    let currentRole = 'importador';
+    let currentTab = 'daily';
+
+    function initChart() {
+      const ctx = document.getElementById('trajectoryChart').getContext('2d');
+      const labels = TRAJECTORY_DATA.map(d => d.date.substring(5)); // MM-DD
+      const p10Data = TRAJECTORY_DATA.map(d => d.p10);
+      const p25Data = TRAJECTORY_DATA.map(d => d.p25);
+      const p50Data = TRAJECTORY_DATA.map(d => d.p50);
+      const p75Data = TRAJECTORY_DATA.map(d => d.p75);
+      const p90Data = TRAJECTORY_DATA.map(d => d.p90);
+
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Resistencia P90 (Alza Severa)',
+              data: p90Data,
+              borderColor: 'rgba(244, 63, 94, 0.7)',
+              borderWidth: 1.5,
+              borderDash: [4, 4],
+              pointRadius: 0,
+              fill: false
+            },
+            {
+              label: 'Cuartil P75',
+              data: p75Data,
+              borderColor: 'rgba(56, 189, 248, 0.4)',
+              borderWidth: 1,
+              pointRadius: 0,
+              fill: false
+            },
+            {
+              label: 'Mediana P50 (Centro Esperado)',
+              data: p50Data,
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16, 185, 129, 0.08)',
+              borderWidth: 2.5,
+              pointRadius: 1,
+              pointHoverRadius: 5,
+              fill: true
+            },
+            {
+              label: 'Cuartil P25',
+              data: p25Data,
+              borderColor: 'rgba(56, 189, 248, 0.4)',
+              borderWidth: 1,
+              pointRadius: 0,
+              fill: false
+            },
+            {
+              label: 'Soporte P10 (Baja Severa)',
+              data: p10Data,
+              borderColor: 'rgba(16, 185, 129, 0.7)',
+              borderWidth: 1.5,
+              borderDash: [4, 4],
+              pointRadius: 0,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(9, 13, 22, 0.95)',
+              titleColor: '#38bdf8',
+              bodyFont: { family: 'JetBrains Mono' },
+              borderColor: 'rgba(56, 189, 248, 0.3)',
+              borderWidth: 1,
+              padding: 10
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255, 255, 255, 0.04)' },
+              ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 10 } }
+            },
+            y: {
+              grid: { color: 'rgba(255, 255, 255, 0.04)' },
+              ticks: {
+                color: '#64748b',
+                font: { family: 'JetBrains Mono', size: 10 },
+                callback: v => '$' + v.toFixed(2)
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // 2. Control Deslizante (Slider)
+    const slider = document.getElementById('daySlider');
+    slider.addEventListener('input', function() {
+      const idx = parseInt(this.value);
+      const d = TRAJECTORY_DATA[idx];
+      document.getElementById('sliderDayLabel').innerText = `Día Seleccionado: Día ${d.day < 10 ? '0' + d.day : d.day} (${d.date} ${d.day === 3 ? '— HOY' : (d.day === 4 ? '— Mañana' : (d.day === 5 ? '— Pasado' : ''))})`;
+      document.getElementById('sliderCatalystLabel').innerText = `Catalizador: ${d.catalyst}`;
+      document.getElementById('cardP10').innerText = '$' + d.p10.toFixed(4);
+      document.getElementById('cardP25').innerText = '$' + d.p25.toFixed(4);
+      document.getElementById('cardP50').innerText = '$' + d.p50.toFixed(4);
+      document.getElementById('cardP75').innerText = '$' + d.p75.toFixed(4);
+      document.getElementById('cardP90').innerText = '$' + d.p90.toFixed(4);
+      document.getElementById('cardStd').innerText = '±$' + d.std.toFixed(4);
+    });
+
+    // 3. Rol y Decisiones
+    function setRole(role) {
+      currentRole = role;
+      document.getElementById('btnImportador').classList.toggle('active', role === 'importador');
+      document.getElementById('btnExportador').classList.toggle('active', role === 'exportador');
+      
+      const badge = document.getElementById('recBadge');
+      const text = document.getElementById('recText');
+
+      if (role === 'importador') {
+        badge.className = 'rec-badge badge-buy';
+        badge.innerText = 'RECOMENDACIÓN TÁCTICA: ESPERAR O COMPRA ESCALONADA';
+        text.innerHTML = 'Existe un <strong>42.48% de probabilidad</strong> de que el tipo de cambio regrese por debajo de los $18.00 MXN en las próximas dos semanas. La probabilidad de que el dólar rompa los $20.00 es de solo <strong>2.82%</strong>. No pague primas caras de pánico por encima de $18.50; concentre compras spot o fije coberturas parciales en el soporte de <strong>$17.60 - $17.90</strong>.';
+      } else {
+        badge.className = 'rec-badge badge-sell';
+        badge.innerText = 'RECOMENDACIÓN TÁCTICA: VENDER EN RESISTENCIAS ESCALONADAS';
+        text.innerHTML = 'Coloque órdenes de venta en escala entre <strong>$18.50 y $18.80 MXN</strong>. Si una noticia política o arancelaria provoca un salto intradiario hacia <strong>$19.00 - $19.30 (zona P90)</strong>, ejecute ventas spot de inmediato; el análisis de <em>Event Study</em> demostró que el 73% de los choques de pánico revierten en menos de 72 horas.';
+      }
+      updateCalculator();
+    }
+
+    function updateCalculator() {
+      const amount = parseFloat(document.getElementById('calcAmount').value) || 0;
+      const spot = MODEL_KPIS.spotPrice;
+      const p50 = TRAJECTORY_DATA[30].p50;
+      const p10 = TRAJECTORY_DATA[30].p10;
+      const p90 = TRAJECTORY_DATA[30].p90;
+
+      document.getElementById('costSpot').innerText = '$' + (amount * spot).toLocaleString('es-MX', { maximumFractionDigits: 0 }) + ' MXN';
+      document.getElementById('costP50').innerText = '$' + (amount * p50).toLocaleString('es-MX', { maximumFractionDigits: 0 }) + ' MXN';
+      document.getElementById('costP10').innerText = '$' + (amount * p10).toLocaleString('es-MX', { maximumFractionDigits: 0 }) + ' MXN';
+      document.getElementById('costP90').innerText = '$' + (amount * p90).toLocaleString('es-MX', { maximumFractionDigits: 0 }) + ' MXN';
+    }
+
+    // 4. Render Feed de Noticias
+    function setTab(tab) {
+      currentTab = tab;
+      document.getElementById('tabDaily').classList.toggle('active', tab === 'daily');
+      document.getElementById('tabShocks').classList.toggle('active', tab === 'shocks');
+      renderNews();
+    }
+
+    function renderNews() {
+      const grid = document.getElementById('newsGrid');
+      grid.innerHTML = '';
+
+      if (currentTab === 'daily') {
+        RECENT_NEWS.forEach(item => {
+          const isBull = item.direction === 'ALCISTA_DOLAR';
+          const card = document.createElement('div');
+          card.className = 'news-card';
+          card.innerHTML = `
+            <div>
+              <div class="news-meta">
+                <span class="news-source">${item.source}</span>
+                <span>${item.date}</span>
+              </div>
+              <div class="news-title">${item.title}</div>
+              <div class="news-tags">
+                <span class="tag ${isBull ? 'tag-bull' : 'tag-bear'}">${item.direction || 'NEUTRAL'}</span>
+                <span class="tag">${item.archetype || 'macro'}</span>
+              </div>
+            </div>
+            <a href="${item.url}" target="_blank" class="news-link">Ver artículo original ↗</a>
+          `;
+          grid.appendChild(card);
+        });
+      } else {
+        // Mostrar tablas duales de grandes choques
+        grid.style.gridTemplateColumns = '1fr';
+        grid.innerHTML = `
+          <div class="tables-dual-grid">
+            <div class="table-box">
+              <h3 style="color: var(--accent-rose); margin-bottom: 0.75rem; font-size: 0.95rem;">🚨 MAYORES DEPRECIACIONES DEL PESO (ALZA DÓLAR)</h3>
+              <table>
+                <thead>
+                  <tr><th>Fecha</th><th>Día %</th><th>CAR</th><th>p-val</th><th>Titular Relevante</th></tr>
+                </thead>
+                <tbody>
+                  ${MAJOR_SHOCKS.alza.map(s => `
+                    <tr class="row-bull">
+                      <td>${s.date}</td>
+                      <td>+${s.return_pct.toFixed(2)}%</td>
+                      <td>+${s.car_pct.toFixed(2)}%</td>
+                      <td>${s.p_value.toFixed(4)}</td>
+                      <td style="font-family: inherit; font-size: 0.75rem;">${s.headline}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-box">
+              <h3 style="color: var(--accent-emerald); margin-bottom: 0.75rem; font-size: 0.95rem;">💎 MAYORES APRECIACIONES DEL PESO (BAJA DÓLAR)</h3>
+              <table>
+                <thead>
+                  <tr><th>Fecha</th><th>Día %</th><th>CAR</th><th>p-val</th><th>Titular Relevante</th></tr>
+                </thead>
+                <tbody>
+                  ${MAJOR_SHOCKS.baja.map(s => `
+                    <tr class="row-bear">
+                      <td>${s.date}</td>
+                      <td>${s.return_pct.toFixed(2)}%</td>
+                      <td>${s.car_pct.toFixed(2)}%</td>
+                      <td>${s.p_value.toFixed(4)}</td>
+                      <td style="font-family: inherit; font-size: 0.75rem;">${s.headline}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Inicialización al cargar
+    document.addEventListener('DOMContentLoaded', () => {
+      initChart();
+      updateCalculator();
+      renderNews();
+    });
+  </script>
+</body>
+</html>
