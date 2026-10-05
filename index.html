@@ -531,12 +531,36 @@
       });
     }
 
-    // 2. Control Deslizante (Slider)
+    // 2. Control Deslizante Dinámico con Avance Automático por Fecha
     const slider = document.getElementById('daySlider');
-    slider.addEventListener('input', function() {
-      const idx = parseInt(this.value);
+    
+    function getTodayDayIndex() {
+      const now = new Date();
+      // Base: 2 de Octubre de 2026
+      const nowMs = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+      const baseMs = Date.UTC(2026, 9, 2); // Mes 9 = Octubre (0-indexed)
+      let diff = Math.floor((nowMs - baseMs) / (1000 * 60 * 60 * 24));
+      if (diff < 0) diff = 0;
+      if (diff > 30) diff = 30;
+      return diff;
+    }
+
+    function updateSliderUI(idx) {
+      const todayIdx = getTodayDayIndex();
       const d = TRAJECTORY_DATA[idx];
-      document.getElementById('sliderDayLabel').innerText = `Día Seleccionado: Día ${d.day < 10 ? '0' + d.day : d.day} (${d.date} ${d.day === 3 ? '— HOY' : (d.day === 4 ? '— Mañana' : (d.day === 5 ? '— Pasado' : ''))})`;
+      
+      let relativeTag = '';
+      if (idx === todayIdx) {
+        relativeTag = '— HOY (Activo)';
+      } else if (idx === todayIdx + 1) {
+        relativeTag = '— Mañana';
+      } else if (idx === todayIdx + 2) {
+        relativeTag = '— Pasado mañana';
+      } else if (idx < todayIdx) {
+        relativeTag = '— Histórico';
+      }
+
+      document.getElementById('sliderDayLabel').innerHTML = `Día Seleccionado: <strong>Día ${d.day < 10 ? '0' + d.day : d.day} (${d.date} ${relativeTag})</strong>`;
       document.getElementById('sliderCatalystLabel').innerText = `Catalizador: ${d.catalyst}`;
       document.getElementById('cardP10').innerText = '$' + d.p10.toFixed(4);
       document.getElementById('cardP25').innerText = '$' + d.p25.toFixed(4);
@@ -544,7 +568,17 @@
       document.getElementById('cardP75').innerText = '$' + d.p75.toFixed(4);
       document.getElementById('cardP90').innerText = '$' + d.p90.toFixed(4);
       document.getElementById('cardStd').innerText = '±$' + d.std.toFixed(4);
+    }
+
+    slider.addEventListener('input', function() {
+      updateSliderUI(parseInt(this.value));
     });
+
+    function syncCalendarDay() {
+      const todayIdx = getTodayDayIndex();
+      slider.value = todayIdx;
+      updateSliderUI(todayIdx);
+    }
 
     // 3. Rol y Decisiones
     function setRole(role) {
@@ -665,6 +699,7 @@
     // Inicialización al cargar
     document.addEventListener('DOMContentLoaded', () => {
       initChart();
+      syncCalendarDay();
       updateCalculator();
       renderNews();
     });
