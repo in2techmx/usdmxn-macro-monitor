@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -213,6 +213,20 @@
     }
     .tag-bull { color: var(--accent-rose); background: rgba(244, 63, 94, 0.1); }
     .tag-bear { color: var(--accent-emerald); background: rgba(16, 185, 129, 0.1); }
+    .badge-critico { color: #f43f5e; background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.35); font-weight: 700; }
+    .badge-alto { color: #fb923c; background: rgba(251, 146, 60, 0.15); border: 1px solid rgba(251, 146, 60, 0.35); font-weight: 700; }
+    .badge-moderado { color: #facc15; background: rgba(250, 204, 21, 0.15); border: 1px solid rgba(250, 204, 21, 0.3); }
+    .badge-bajo { color: #94a3b8; background: rgba(148, 163, 184, 0.1); border: 1px solid rgba(148, 163, 184, 0.2); }
+    
+    .transmission-box {
+      margin: 0.85rem 0 1rem 0; padding: 0.75rem; border-radius: 0.5rem;
+      background: rgba(15, 23, 42, 0.75); border-left: 3px solid var(--accent-cyan);
+      font-size: 0.8rem; line-height: 1.45; color: #cbd5e1;
+    }
+    .transmission-title {
+      font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--accent-cyan); font-weight: 700; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.3rem;
+    }
 
     .news-link {
       color: var(--accent-cyan); font-size: 0.8rem; text-decoration: none; font-weight: 600;
@@ -640,6 +654,21 @@
       renderNews();
     }
 
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function sanitizeUrl(url) {
+      if (!url || !/^https?:\/\//i.test(url)) return '#';
+      return encodeURI(url);
+    }
+
     function renderNews() {
       const grid = document.getElementById('newsGrid');
       const filterBar = document.getElementById('channelFilters');
@@ -655,21 +684,34 @@
 
         filtered.forEach(item => {
           const isBull = item.direction === 'ALCISTA_DOLAR';
+          const isBear = item.direction === 'BAJISTA_DOLAR';
+          const badgeClass = item.impact_badge || 'badge-moderado';
+          const score = item.impact_score != null ? item.impact_score.toFixed(1) : '5.0';
+          const level = item.impact_level || 'MODERADO';
+          const transmission = item.transmission || 'Monitoreo de flujos cambiarios sin impacto directo.';
+
           const card = document.createElement('div');
           card.className = 'news-card';
           card.innerHTML = `
             <div>
               <div class="news-meta">
-                <span class="news-source">${item.source}</span>
-                <span>${item.date}</span>
+                <span class="news-source">${escapeHtml(item.source)}</span>
+                <span>${escapeHtml(item.date)}</span>
               </div>
-              <div class="news-title">${item.title}</div>
-              <div class="news-tags">
-                <span class="tag ${isBull ? 'tag-bull' : 'tag-bear'}">${item.direction || 'NEUTRAL'}</span>
-                <span class="tag" style="color: var(--accent-cyan);">${item.channel_ui || item.channel || 'Macro'}</span>
+              <div class="news-tags" style="margin-bottom: 0.6rem;">
+                <span class="tag ${badgeClass}">⚡ ${score} / 10 · ${level}</span>
+                <span class="tag ${isBull ? 'tag-bull' : (isBear ? 'tag-bear' : '')}">${escapeHtml(item.direction || 'NEUTRAL')}</span>
+                <span class="tag" style="color: var(--accent-cyan);">${escapeHtml(item.channel_ui || item.channel || 'Macro')}</span>
+              </div>
+              <div class="news-title">${escapeHtml(item.title)}</div>
+              <div class="transmission-box">
+                <div class="transmission-title">
+                  <span>⚙️ Mecanismo de Transmisión Macroeconómica:</span>
+                </div>
+                <div>${escapeHtml(transmission)}</div>
               </div>
             </div>
-            <a href="${item.url}" target="_blank" class="news-link">Ver artículo original ↗</a>
+            <a href="${sanitizeUrl(item.url)}" target="_blank" rel="noopener noreferrer" class="news-link">Ver artículo original ↗</a>
           `;
           grid.appendChild(card);
         });
