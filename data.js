@@ -376,9 +376,24 @@ const TRAJECTORY_DATA = [
 
 const RECENT_NEWS = [
   {
-    "id": "NEWS-033a2485",
+    "id": "NEWS-04e74651",
+    "title": "Sudán, una guerra sin fronteras",
+    "source": "Vatican News",
+    "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQWnExbXRqVnBVYUpCam5Ob09LU05TZzJjdm9kVC1TbTBKYkdnWXBhazJPZUhKRWFfNkItQ3NvT01IbnBxaUU5eGVZUWdzNzB5aGhxZjJLajNoX1dfaGFwYWhHSW9ILUhrQlo1bExvNndFbFdVbjVvbEdiUHNHRnpDY0JYWk0yMi1seUFiaUYyeWkyNkYzdU5scmJXeF9TWHRYaTFmZWlZQl9GZVpEb3JPVU5R?oc=5",
+    "date": "2026-10-05",
+    "channel": "geopolitica_energia",
+    "channel_ui": "🌍 Geopolítica & Petróleo",
+    "archetype": "geopolitica_energia",
+    "direction": "ALCISTA_DOLAR",
+    "impact_score": 6.9,
+    "impact_level": "ALTO",
+    "impact_badge": "badge-alto",
+    "transmission": "Tensión militar o riesgo en rutas de crudo dispara la aversión al riesgo global y eleva la demanda de refugio en USD."
+  },
+  {
+    "id": "NEWS-0155b952",
     "title": "Gaza, tres años después: cinco claves para entender cómo una guerra destruye la capacidad de una población para alimentarse",
-    "source": "Acción contra el Hambre",
+    "source": "accioncontraelhambre.org",
     "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPRm5JdEpGa1I4cEgtSUFPdFpYX2REaDdtQWxyMExFa1pTSDhMdE9Gc2cydFBJUFNnbGpCcjdPTENDUVB6aWNneFNnbGpfdVZ2RTl2X2VEaGVzQXNRUExXZGUySURiRmh1RXFpR0pXOTlIRDJKNUNSbVZvb05VMWZnSDlsNElsUDlZTG9XWVJOX3lJd2l5a3lVY0VEZHpyVXpiTm5sM0JZWHJoNFczWERyYXNwWEx0VDhiYUFZOFo1VXpNUWRURXJSWTNVZ2czUQ?oc=5",
     "date": "2026-10-05",
     "channel": "geopolitica_energia",
@@ -391,7 +406,7 @@ const RECENT_NEWS = [
     "transmission": "Tensión militar o riesgo en rutas de crudo dispara la aversión al riesgo global y eleva la demanda de refugio en USD."
   },
   {
-    "id": "NEWS-0585cabc",
+    "id": "NEWS-03d49f68",
     "title": "Exportaciones de crudo en Medio Oriente se acercan a sus niveles previos a la guerra",
     "source": "El Informador",
     "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxOSHE0X2NxMWF6VWpkVUlodkNWS1V5eHpzWXd3eVduNjJ5Rk10azFhbUkzRHFyRUVVM2cxTUtKVjhIWDJSRVozYzBxV091MXdsZGt3OTdGcEx1V2xJdEJTUmRkWExHcDNRUU9JX2NoSWt1SEVpYVZBMVpmaUlod2cyWVUzMmRVNG9RVmdaT1lxaGNfWWZyNEhmX3ZpTVBWb3hkRUgtNW16Sm5VU3g5RjRZLTc3dnRxeHlBdnlkOXY1U3hXNlBkUUtwanFUYkoycndhUFZHTDlGbWNfdzjSAeABQVVfeXFMTTc4c1BobmJqbE51WWJPektaTjdpYnBBbmZlcE8tdTl2SHpnX01nZlZqbzNnWHpmX2s5YTNuNVlHUEpUdUZKVXROYTNwNVlWejBwczVaWkJRdy11enRIMXJGSzYzTGNjRWNFbFllTFNKWmZMRDBmYTNJMm1BdV93WElxTlh5d3ljWnpVc3RvOFlpUzVBUkx5T1Y2cUQ1NVllYUNZXzZWdmFwenBMZ0RZM2dQY2Y0dFAxbW92ekZqSE4yb2plbGozUTJOcVlHLUZjTWZPMkxIdnhkdWpxM1VSWTE?oc=5",
@@ -406,7 +421,7 @@ const RECENT_NEWS = [
     "transmission": "Tensión militar o riesgo en rutas de crudo dispara la aversión al riesgo global y eleva la demanda de refugio en USD."
   },
   {
-    "id": "NEWS-00d6a6df",
+    "id": "NEWS-0309b67f",
     "title": "Etiopía vuelve a la guerra y el Cuerno de África contiene el aliento",
     "source": "Grupo Animal",
     "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9DMmRPbHZOdFdoak15UHliMDZxaE1neVc4RVhWUURyVGxiX2RRNmtUdVhzVFhUcnNlZXN6X0FPSnIwY2s3OHk1Undqd2duQ25fSVpXVzlKVXAxZHgtRW51cEpQdmxsSGFxelltQ21iaw?oc=5",
@@ -421,22 +436,7 @@ const RECENT_NEWS = [
     "transmission": "Tensión militar o riesgo en rutas de crudo dispara la aversión al riesgo global y eleva la demanda de refugio en USD."
   },
   {
-    "id": "NEWS-05bd6b91",
-    "title": "Israel mata a dos madres y sus hijas en Gaza en un ataque dirigido contra un alto miembro de Hamas",
-    "source": "CNN en Español",
-    "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPMnBLc1BvTlVFTjIzVFUzaWxjenhlMGxDdVNweXJvSmZJWXlTNVFkNjNXVWlkaGNsYU1pU3o5dDlwWnJRZFNvb0tDcFQ0b0NLX3Z3b2VocENvekV6M2luSzNCQXJQeGc2V1dILUEydHJFbDMxeWtCcmFpS0szTGp5RHRqTE9CS2Z2UE5HTW43OXA2dw?oc=5",
-    "date": "2026-10-05",
-    "channel": "geopolitica_energia",
-    "channel_ui": "🌍 Geopolítica & Petróleo",
-    "archetype": "geopolitica_energia",
-    "direction": "ALCISTA_DOLAR",
-    "impact_score": 6.9,
-    "impact_level": "ALTO",
-    "impact_badge": "badge-alto",
-    "transmission": "Tensión militar o riesgo en rutas de crudo dispara la aversión al riesgo global y eleva la demanda de refugio en USD."
-  },
-  {
-    "id": "NEWS-02b541c1",
+    "id": "NEWS-0157777c",
     "title": "Sector servicios de Canadá se contrae por cuarto mes por aranceles",
     "source": "Investing.com México",
     "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQaUtyVkVNQXJMSlBjbzZyVV9veEFINmxXQVcxQTlyaTBCbWJVYTlPVHVldzZLMFp0bUFUWWlSLU1wb0ZobHBJUkhpdURycE16amg5ZFRsbzE1akFQTmtBUjk4THFvZmlxWkhCX2VvY3ZQckE0bUtGYUlsQnQwdkhvMVVsOER2dEZJZXVPWElOUHktTDdqQjBTd3ZhY2M3OERtaVNDcG42Ny1SVC03TENncV9zOVRsYmMzdTJjdE5MNA?oc=5",
@@ -451,9 +451,9 @@ const RECENT_NEWS = [
     "transmission": "Expectativa de tasas elevadas en EE.UU. o riesgos arancelarios fortalecen al dólar y comprimen el diferencial frente a Banxico."
   },
   {
-    "id": "NEWS-03f1b072",
+    "id": "NEWS-052cfee5",
     "title": "EEUU y Canadá: cómo los nuevos aranceles impactan en los mercados",
-    "source": "Agroempresario",
+    "source": "agroempresario.com",
     "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOM00yTkJwenJsVDNpS2p1SUVRSzU0dkRCRHNXcExjWVBKMHhZVHVqeWJUclRROGlfanNHazdsOVFtR1ZOY09NeEFTWDdRTTROc2ZFbzVOUTJEWHRWNHJNZHRqbjV2d3hucUZfVTdaaDJnVFpLVUlLQW03MmdBelhUVkhnbS1DalotVlV1MkN0N0EwdmJVVnFUR25MaEtKNWdvU3FURjFHcTlDTkl5U2o2Qw?oc=5",
     "date": "2026-10-05",
     "channel": "eeuu_fed",
@@ -466,7 +466,7 @@ const RECENT_NEWS = [
     "transmission": "Expectativa de tasas elevadas en EE.UU. o riesgos arancelarios fortalecen al dólar y comprimen el diferencial frente a Banxico."
   },
   {
-    "id": "NEWS-05075b4b",
+    "id": "NEWS-03a241ae",
     "title": "Trump amenaza a Corea del Sur con duplicar los aranceles por acuerdo de GNL de Alaska.",
     "source": "es.qz.com",
     "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOVl9YeGVadUVFRl9SUGJ5X09wNzVVLWJfNWRxZndUcVp1VFBzVTd0NVJKN2x6aEpxc2xqTUxnUDM4UXVhZTAxOWMwT1RPUlRWLWdlMno3VTR0blAwS1RoLXhPZGVsbkszTDBuZzdnOVNjbHFBZWpXUFV4TS1ETDlRdFhZa015TG5uZUtPU0ZKNkVRenc?oc=5",
@@ -481,7 +481,7 @@ const RECENT_NEWS = [
     "transmission": "Expectativa de tasas elevadas en EE.UU. o riesgos arancelarios fortalecen al dólar y comprimen el diferencial frente a Banxico."
   },
   {
-    "id": "NEWS-01d8b2f3",
+    "id": "NEWS-0122b43d",
     "title": "El fiscal general de EEUU descarta reabrir una investigación contra el expresidente de la Fed",
     "source": "Yahoo Finanzas",
     "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPSHg1Q2o2d290VWFRd2ZaNEptaVU5SEYzNmJBOFRnSjRHXy16TERzaVJ6MWxFbEVQYnhkNlUteVUzQVQtd19wV3JSX1Z0VE42LXBxMFlsUVdsQ3VkZ3NrMG54SFQtVWpJdDdWT1FJY1NhTzcwNXlicXhZRHB1MlRQeEluNklxM2oxcmlFaXYxa0F2MXd5WUdXbw?oc=5",
@@ -496,9 +496,9 @@ const RECENT_NEWS = [
     "transmission": "Expectativa de política monetaria asimilada por el consenso de los mercados financieros."
   },
   {
-    "id": "NEWS-030341fa",
+    "id": "NEWS-037722c6",
     "title": "Hassett, asesor de Trump, insta a Powell a abandonar la Junta de la Reserva Federal",
-    "source": "bloomberglinea.com",
+    "source": "Bloomberg Línea",
     "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNQnlCd2FTaFVIcExjR3YwQXBmakRZckp6Wkl6U2hIWW9uWGRKcVUyYm5NLWJsZkFIQ0RfVW5uWUF5WEllSjM5RnNWVHd6b1lNNG5iUmU1QVBLY1NwLWU1cS0xVlRnYU5Db255RExVYW5PV2dmRkduUjYyVUZZQ2pVcjBqZ0ZyM0tZd2V6VFRUaGJHSkZSLUNaRzc4RUNfN3pnd0hjMGJWa1BjVXNpb1lRSnQyTlpCV0ZmV091MnBERdIB0wFBVV95cUxNUnVpRzk4TUt1NTUwUUZnSks1UjhGWG94V3RIRW5vU3ZETEtNVWhkMU9yYlVPV3VldWxIZHpxX09SOWZxdDBwaXVOeXJhVVFYLU55R3MxanU0X0NjR2FBM25DZUN0SjNMMGNUYXdNdXdZUmhjOVpnVW1IcGJHeTRJVWoxdEZ6cmVXV0dzZEo1VlBrX0ZSVXNHMkJDV2FISkREQ19FcThGOFNXa3o2S2ZkZl9wUkFsS3BvdWo0UnI5aWxGOHNJQmRkR1oyNm9uQkxPTFZv?oc=5",
     "date": "2026-10-05",
     "channel": "eeuu_fed",
@@ -511,9 +511,9 @@ const RECENT_NEWS = [
     "transmission": "Expectativa de política monetaria asimilada por el consenso de los mercados financieros."
   },
   {
-    "id": "NEWS-037f842a",
+    "id": "NEWS-01fbf6ef",
     "title": "Goldman Sachs: La Reserva Federal está a punto de dejar de subir los tipos de interés antes de lo previsto.",
-    "source": "vietnam.vn",
+    "source": "Vietnam.vn",
     "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOWTVmVDNfTDI1Ykg3blRYQW55alRQNE9GdFZBLXIwcmJmT0JVOEQxdzNTczRfbUlSSG95QnJCeGVPSWYyZmZrSzZzQkJiWkxxYnlTNEV0UXQ5dVNfMzZnMWd3LUZJMVZqRE9IMm8wSzJtY0ItZzBmMGp0N0JGVGZXTnlldThrVGlBS0E?oc=5",
     "date": "2026-10-05",
     "channel": "eeuu_fed",
@@ -526,9 +526,24 @@ const RECENT_NEWS = [
     "transmission": "Expectativa de política monetaria asimilada por el consenso de los mercados financieros."
   },
   {
-    "id": "NEWS-01e8460d",
+    "id": "NEWS-03d183fa",
+    "title": "Peso arranca con apreciación de 0.21%; cotiza en 18.10 por dólar",
+    "source": "La Jornada",
+    "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxORUlCbmctZTAtREhNaHZXRUF2ZkZDa3JEUklrSHNlRllmY2RzMFlYaEVHNU1TN05CUGhxVkxiS3ZZdUR2YzVBdTkwYm01QnRieUlXbDhvenlHbFM2QkRXM1dudEdBTHhBQlJpT2Z6Z2tjRWZ2UHBCOWNCWVNEbkZqaUJXNEUtNks1YU4xaDZCWVNpNGZ4bDZqWWlpcGM5UHNfXzAyaHRyVm5CQWExc3FsS3ZMRW9xUQ?oc=5",
+    "date": "2026-10-05",
+    "channel": "mexico_banxico",
+    "channel_ui": "🇲🇽 México & Banxico",
+    "archetype": "mexico_banxico",
+    "direction": "BAJISTA_DOLAR",
+    "impact_score": 6.1,
+    "impact_level": "MODERADO",
+    "impact_badge": "badge-moderado",
+    "transmission": "Postura firme de tasas en Banxico o disciplina presupuestaria sostienen el atractivo de la moneda local."
+  },
+  {
+    "id": "NEWS-05076732",
     "title": "Mercados emergentes suben hasta 1,2% tras débil dato de empleo en EE.UU.; Brasil concentra la atención",
-    "source": "bloomberglinea.com",
+    "source": "Bloomberg Línea",
     "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNYVFlWmc0bmMxaVlxb1p1WnlmWFVXTHVfMjNJRTA0UjRfNUlQdklPYWNLMU1TZXcwbzNiakhVdlBuWkpkMVFkbHRMdXdDbUsyVHN5VFZFUHlWVGV5U0VNdHg1UTFPRWR6cTJ3QjZmSWlzRTEwMGtzWjhzNlBrLUU4VU5oVHBNSnlTMkhCaURfQ0VKdnRfbktsSHBqZEkzQVhiRFZMXzJJOTAyMUMybDJhM0VyZVB3eEVTMEpKeEVaZVhZb2hpWnFtN2k1WXdrdEg4dWFqdtIB6AFBVV95cUxNeWRpRDVpRnkwVmpuellNWk82QkVrbm1leTBYbGJnSmxTMzRLc08wT3J1SjRGT2RwS3ZGNUpWUHg5NmtrSlBFZTBqSmFqdmZvMDZIUGdRT01vRzhCTG91c0pEX3FWLWpuRC1vdXZMc1FaSVNjcVMxcFhEcU0tbEx0RGpWQkxPR2YybkZVZUhjdXU3NUtyVXI4aHJjYmFLdktNVHZFOU9iQ1g1eGM0MG1QeG41dnFiZmNVSFlsRWdFQzd2WWtxaHRwODdIT1dhQjFJX2tNS2ZObzdPTmlzYTN4LWFpM0FXRGVS?oc=5",
     "date": "2026-10-05",
     "channel": "global_brics",
@@ -541,22 +556,7 @@ const RECENT_NEWS = [
     "transmission": "Evolución multilateral y flujos comerciales globales en proceso de monitoreo continuo."
   },
   {
-    "id": "NEWS-00a2dbe4",
-    "title": "¿En qué invertir en el cuarto trimestre? Bonos, IA, cobre y mercados emergentes ganan espacio",
-    "source": "bloomberglinea.com",
-    "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPZW5Mb1kzTkloMUhaNndWVDNGWU45VnRSYUpSWDQ4RzZRenZXa21rMlA3emVyVXZ4bFpqclJqX0RMX1Nxa3BVRnk0RU13NkFFOTdXLTR1YVQ4M21rQjFtdjI2Sm1rM2RsLThEdmRqVjJoWldnenQxRGZHNGw2Ui1uR0djZ3J3d3R1ZFN2QjVLN1hFWjJnUDZrbm85Y3pRcFVUY3p5SUdmakdnaHpycFZ4UUNSNHdnZWZtdlNUUy1OWEI3bzNVUDhlNnpR0gHeAUFVX3lxTE1qSlFOYmhxd0tsT3NSUWoyZmtWSnY2UVE5aXBPeUJKTHVGdl9jZTF1M1hqMXlhX0lmSlpMU2djdjByQnpYZFRULTNTTEx0SnFYMm9KSEtMUkNpY1o0aTJFeENodWh1aTVDVHAta3dFaFZ1TjhSai1aSkJYbVRfUXNIRENsRTdFWURROUllTE4tOWVKTWRMNXJ2VC12aFkwWVFIX1JTMnhnb2ZWcDBPSVZZWTlDWlJMZG5uS1dfbnBQMTc0MzlMNnZZTXVrVE1za1ZBQWxubkZrXzlNMmlNZw?oc=5",
-    "date": "2026-10-05",
-    "channel": "global_brics",
-    "channel_ui": "🌐 Global & BRICS",
-    "archetype": "global_brics",
-    "direction": "BAJISTA_DOLAR",
-    "impact_score": 5.7,
-    "impact_level": "MODERADO",
-    "impact_badge": "badge-moderado",
-    "transmission": "Apetito por riesgo global o diversificación de reservas impulsa entradas de capital hacia divisas de alto rendimiento."
-  },
-  {
-    "id": "NEWS-056a43bc",
+    "id": "NEWS-01af1239",
     "title": "Precios del petróleo bajan ante recuperación de exportaciones de Medio Oriente y liberación de reservas del G7",
     "source": "Yahoo Finanzas",
     "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOb0pzQnlNV0FkOUpsQVg3S0FLc2tTUzdCWVk1M0FrRnR1aFVvdC1UTnpyRXoxRWZGU3o5T2txUEt3Z1NKODBFekhYRnQ3cTZ1bFpZaFRUZm9fcFJTNHRXbUNQZWNQdmUwdTgzSlRVM1JiSUp5R0ZiemRMeDlwMGg5YWNWMHlPSk1IbjZYRHNZNEJCREx4bFAtblYya0w4NGlNbGdlWUJfRlFPLVlHb3F2WV9JaEhYZHM?oc=5",
@@ -571,9 +571,9 @@ const RECENT_NEWS = [
     "transmission": "Seguimiento a cotizaciones energéticas e inventarios sin desbalance inmediato en flujos cambiarios."
   },
   {
-    "id": "NEWS-04dafb92",
+    "id": "NEWS-05948ad3",
     "title": "Opera precio del petróleo estable tras alza de exportaciones de Medio Oriente y decisión del G7",
-    "source": "MILENIO",
+    "source": "milenio.com",
     "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNeWQzb09CcFp2OHAwc3hpUWRRQ2VBeko3eDhSb0l0UVZkU3RsUVpKS1h3dlROcjVkOXh5cGpRc0RsUV95LWxDOUpIVnRnem04andHWXpHN1hoNFpvMGo2SC1MQURZLUhLdHNOWnRLY0VKZHlkblZ5WDVFMFBzVUtUMGVyN2NJcjRWdXczNEFNamdaYlVMTmZrSk5IY1NNQdIBngFBVV95cUxQQ25ERVdJYVR4NGJyaFZNMXJ4U0hfOFk1dE9fYVhNY1hVc3FkTGw0QnFxUVdqSkNmd25UQlRxQTRvSGZWYkMwQzBBdHJhVmVmcjVISlJEdERhVF9Hd0JnTUswaTJFS0l1MkM3VFNKUFhlTXVDN09JWmIxbDJnQ0h6SEhERnJWNDQ0anVnRy13amk5RlBoamZENHRKalpxdw?oc=5",
     "date": "2026-10-05",
     "channel": "geopolitica_energia",
@@ -586,22 +586,7 @@ const RECENT_NEWS = [
     "transmission": "Seguimiento a cotizaciones energéticas e inventarios sin desbalance inmediato en flujos cambiarios."
   },
   {
-    "id": "NEWS-02e843ee",
-    "title": "Comienzan a construir casas con ayuda de la impresión 3D en el sureste de India",
-    "source": "TV BRICS",
-    "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNbEVuOU40c3l3X1RSU2xwbjY3d05XSFNTWmFvWk11Y0VudENSS0p1M0dSUElTV0QzM2ZYeC1nVVFXLU5hRTE5SjdIYzFLWHhIWFBueHExZHU3Rmk3WkVHQW94WlVHYzZjLXU2ZTdwMDd1Znl3MW9fR2VCWEQteTlyLVZ0MWRSRHBKVzdocFFFY053Q1Z6TklzRWhZWWdZLXJUNEZENXdVUXpFS1N4?oc=5",
-    "date": "2026-10-05",
-    "channel": "global_brics",
-    "channel_ui": "🌐 Global & BRICS",
-    "archetype": "global_brics",
-    "direction": "ALCISTA_DOLAR",
-    "impact_score": 4.7,
-    "impact_level": "MODERADO",
-    "impact_badge": "badge-moderado",
-    "transmission": "Aversión generalizada a mercados emergentes reduce la liquidez y presiona a la baja divisas líquidas como el MXN."
-  },
-  {
-    "id": "NEWS-041b909f",
+    "id": "NEWS-03215d1d",
     "title": "Sebastián Salgado destaca nuevas oportunidades de comunicación internacional con los BRICS | TV BRICS, 05.10.26",
     "source": "TV BRICS",
     "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQTVcySHRzdS1TN0JxSEVyV2NFemxKOXhKaGdWTjZYb3YzWlNkT2tteVFybTREU0hCd0lXR0VHNGNpNVNPNGw3d1lzcDRXcXJQUllZbFRxX0pDLXBtb3FYQ2xKcjFHaWdiLXBEd1Z5WWRuNzQ5b2hQd3RPRmo0QzZfaFk3UWN4UWxOM2wyT09vUldEb3FialJQZkhxWGlHT2x3b2JORmg5NThnbUFTRkZDN0xzNzRtYVdfYTY4Z1RhMXRPSHIyT05kdg?oc=5",
@@ -616,7 +601,7 @@ const RECENT_NEWS = [
     "transmission": "Evolución multilateral y flujos comerciales globales en proceso de monitoreo continuo."
   },
   {
-    "id": "NEWS-00f36504",
+    "id": "NEWS-05911450",
     "title": "Cumbre de BRICS en Nueva Delhi: entre tensiones y conflictos, buscará impulsar diálogo y comercio",
     "source": "TRT Español",
     "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE45ZlE5TEVxdHhqUUlWRUpNdy1vaHh6bjRlVFRWMmp4ZHpRTjBZRGhGeHRvTkk5SG9Qd3lKYWQ4X0dVbjVfbDBUZXR4Vlg0RWlnTVE0U0Jjb2l3LWc?oc=5",
@@ -631,7 +616,22 @@ const RECENT_NEWS = [
     "transmission": "Evolución multilateral y flujos comerciales globales en proceso de monitoreo continuo."
   },
   {
-    "id": "NEWS-01001a4d",
+    "id": "NEWS-0333498f",
+    "title": "Sudáfrica planta 7 millones de árboles en 6 meses",
+    "source": "TV BRICS",
+    "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOMzVZWV9McnFMVExwWFFOaE1lbXllNGRTV3pLR05ZNGd0NVkxaklQcWJfVTNDQTNmZW5uNmpKemJfek13d0Z5c1E0Z0xhNDdTQmY4YWZpMUt2R0w2VjdXWGd6c1RRSlVISi1tdDZEOFFJV2hMOFdjVWFEd3pBbnRzbjNwNA?oc=5",
+    "date": "2026-10-05",
+    "channel": "global_brics",
+    "channel_ui": "🌐 Global & BRICS",
+    "archetype": "global_brics",
+    "direction": "NEUTRAL",
+    "impact_score": 4.7,
+    "impact_level": "MODERADO",
+    "impact_badge": "badge-moderado",
+    "transmission": "Evolución multilateral y flujos comerciales globales en proceso de monitoreo continuo."
+  },
+  {
+    "id": "NEWS-01fea660",
     "title": "Comienzan a construir casas con ayuda de la impresión 3D en el sureste de India",
     "source": "teleSUR",
     "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1Sam51Q0x3N2lfaVN1UWdaWHlnaV9SR2R4NFBGNEdQVmNsM1VjR3U0aGI0S2doM241cklMbEljYjI4cHNjVzhMUWVmeU9CX3hBcDlPMmFHN2JzOWtVWThhNGRwNUlyd25lUWN4Vzh3?oc=5",
@@ -646,9 +646,24 @@ const RECENT_NEWS = [
     "transmission": "Aversión generalizada a mercados emergentes reduce la liquidez y presiona a la baja divisas líquidas como el MXN."
   },
   {
-    "id": "NEWS-0408a141",
+    "id": "NEWS-0380e42e",
+    "title": "En un zoológico brasileño ayudan a los animales a sobrellevar el frío",
+    "source": "TV BRICS",
+    "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNUU91cDJKczJUeE5ReUd6VGhpLU1RdEd0RGp4S1pVYXhHZUlNdHo1SGtyNjA2WHNRc3BqSTViSkM4dEYxZ1FWbTBld2N1REV0b1kySXlncDc0aUJ5QWVDRjRPWVVPSTdZdDE5bldMR3lwVHdYS0UtcWRaT0NBRTRqTXB4b1pTSUxxZnp5QVR5TGxqUmZFQXRrRFRKVjlYRmpy?oc=5",
+    "date": "2026-10-05",
+    "channel": "global_brics",
+    "channel_ui": "🌐 Global & BRICS",
+    "archetype": "global_brics",
+    "direction": "NEUTRAL",
+    "impact_score": 4.7,
+    "impact_level": "MODERADO",
+    "impact_badge": "badge-moderado",
+    "transmission": "Evolución multilateral y flujos comerciales globales en proceso de monitoreo continuo."
+  },
+  {
+    "id": "NEWS-033f2534",
     "title": "Peso mexicano sigue cayendo ante el dólar y así cotiza el tipo de cambio este domingo 4 de octubre",
-    "source": "El Imparcial",
+    "source": "elimparcial.com",
     "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxQaUNTU1JKNmxxa1RpWGdDVjBEMTB6RU15YzFEc1AzNFNGbGhCNkVBT1ZycER4OVRKdG1Qb3B0dEFaYmZvOVRyMTl6WGJ6RWxFTWEzbFZwQVU0bEpLQTdOd3QtcjNPVDdJaHpvTzVfOTdKZk5FSnpzNE5oa0hMU0FTN3BOVFZIWEFuQ0hJNEY5SUhfZ2ZPMFZmS2w4RHRQbmJxZFluRHRLdFVGVTYyVnFIV0JqYk1hYy1PTDVYVVRKamYtb3dKTG9kbS1JVjVDaVpXdUFGaWkyVjRHZC11RkHSAfgBQVVfeXFMTjdEd2xlUVB1cFVvcDgwWHVDenJoZlpvaVVNZWlnRlhwQ2d4VThMTkZWMF9NeE5zQzFneHQ2akpoUEJZbTRqSDFPc2dGOTZyc1d3Q2hjTGQ1LWdPZGZJZS1hazMyOHRxMXRuUFUxRERkUjRQc1VTZzF0QVJ0ZzJCYlIydkR5SjRKaHhtT0NlNGtmemZQTnRNelp4ZDBlUG10U01NUU9PYXF5QU41aDVoZE1rWHV3czE5eEwtQmt5cTVhNzhZaGNYSVB3UXhpaTJzaHZKbG5WRUdLeU9jRmlNbnd6SXBNUU1hbjlrVTVRdzI3eGVnNDgwdU4?oc=5",
     "date": "2026-10-05",
     "channel": "mexico_banxico",
@@ -661,7 +676,7 @@ const RECENT_NEWS = [
     "transmission": "Indicadores macroeconómicos domésticos dentro del rango previsto por Banco de México."
   },
   {
-    "id": "NEWS-0214254c",
+    "id": "NEWS-02fc893c",
     "title": "Cae Precio del DÓLAR HOY: Peso mexicano se recupera, ayudan elecciones en Brasil",
     "source": "Investing.com México",
     "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNWHpCcWR0UU51aEJNczRyWkFjOS1Bd09XRExZV0F3WGt4WDlPMU1ITDZ6M1UxdFhsQVhabzBhMDZiLUpNQ2RaVUxCUF92MGhnQzZtNU5STXZETUVOaHY1RXhUeEw5QUs0bzlLR2JGdENTdUhiVkFreTNHcVR3VzFOZ3N2M1BQZVZfN1ZWTDY4cGVsM3FWV1QwMlpYc1BBQ1VwWm1KUGMxMXZmZHMwTVNXdVMtZXRMbWh5dVAyV2FwSWpMbldFRUE?oc=5",
@@ -676,7 +691,7 @@ const RECENT_NEWS = [
     "transmission": "Indicadores macroeconómicos domésticos dentro del rango previsto por Banco de México."
   },
   {
-    "id": "NEWS-0200ae84",
+    "id": "NEWS-050226ae",
     "title": "Dólar en México hoy, lunes 5 de octubre de 2026: cotización del día",
     "source": "Dallas News",
     "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNZ1ZhTjF4c3pBaHJIY1A0ZXFfcGRoQWJ0YUx0RFhoZ1FYVDRpNWkzTG5XcC1RQmp4S3NzNWRkOHdJREhnZGw3cGQ1dXozdjIyaW5VVDFvX2JaOHBUOGRxYW9qUHhQOGlIVmtHUEtvc2RneE1MclBteDRvYkE5X1JidEVZN1c4U2VCQ09WMVhpb0tGdXNOdW5pakhWbUJaaE15aUNKYmNMUFNTYmtCR0RXVmdDN2YwZWNVd0E?oc=5",
@@ -691,7 +706,7 @@ const RECENT_NEWS = [
     "transmission": "Indicadores macroeconómicos domésticos dentro del rango previsto por Banco de México."
   },
   {
-    "id": "NEWS-05ab00e8",
+    "id": "NEWS-0114bdfd",
     "title": "Tasa, gráfico y noticias en vivo de USD/MXN (MXN=X)",
     "source": "Yahoo Finanzas",
     "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBGUnVUdG1uSVF5YzQzRUd5U2VidTZuTnZKekhWZTB3ZUpUakVGZUlqdTRFSTZ4RTdZN216SUt1Q0tLVGpsdzhjb1YtaUpxUWdXNjktaFpHVjZPeVE?oc=5",
@@ -706,7 +721,7 @@ const RECENT_NEWS = [
     "transmission": "Indicadores macroeconómicos domésticos dentro del rango previsto por Banco de México."
   },
   {
-    "id": "NEWS-00ac0713",
+    "id": "NEWS-00f6fecf",
     "title": "Dólar cae y peso mexicano se acerca a los $17 hoy, lunes 5 de octubre 2026",
     "source": "Ambito",
     "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOelRjLVE2Z2o1UEpuSzRtLTdNUmhkX0xWWExVYmx2Mmp6Q05zR0tGaXZwdm14OTVnUDNHR2JrYXh6eVNKRmpkNkN1TExTY255OTZtSWhhZXdqb20tUVNtRTM3Sl92TjVFLXVuZnl4RlZiMmdmZU9ROGtnSDZBSVV6bURHRm9DdEVuQ09Ic0pVRDl3VFJEaDFyQkhxNVZuanB0SXI3aGVXM0xmUFlSeFZGT25EcXUwd9IBuwFBVV95cUxNNW9wZ2sxdi1NbnpUV21vLXRmV0xna3JyQXZaaUFBUVoxSjBvaTFSdkczT051eGtJZ1pLVzJXOW9jeGJ6Q0lST0hycjlVazAzT3FfUVRCZVlnZklHLVloUVFTRDZvemtMRkI2ZFRFUGRBNno3SDRHRG0yUjFjMnp6RmxuR29INGlwS2FHUHNOMkkwZVl5Z1pvOXhLZDRSZ1EyWGdwYnNQd2dmZzdDb1lhbmxHdlhESFp5TWNj?oc=5",
@@ -719,21 +734,6 @@ const RECENT_NEWS = [
     "impact_level": "MODERADO",
     "impact_badge": "badge-moderado",
     "transmission": "Indicadores macroeconómicos domésticos dentro del rango previsto por Banco de México."
-  },
-  {
-    "id": "NEWS-01796241",
-    "title": "Precio del dólar hoy 5 de octubre de 2026: peso mexicano gana pese a la incertidumbre global",
-    "source": "elceo.com",
-    "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9MNUVJaXFad2NHcXpzM2dLN1E1VjRuWmhLUU5jZDVvbS1yeTN3eXIxdER2U1I4UHhaemN4SnpWMmdqdWZaaDNybHpERUZnN29EN2JQMHZBalBYSEFxX2Rfd2EyU2E4X3VjTUl3M2xPdi1vcUZBXzJGWg?oc=5",
-    "date": "2026-10-05",
-    "channel": "mexico_banxico",
-    "channel_ui": "🇲🇽 México & Banxico",
-    "archetype": "mexico_banxico",
-    "direction": "BAJISTA_DOLAR",
-    "impact_score": 4.7,
-    "impact_level": "MODERADO",
-    "impact_badge": "badge-moderado",
-    "transmission": "Postura firme de tasas en Banxico o disciplina presupuestaria sostienen el atractivo de la moneda local."
   }
 ];
 
